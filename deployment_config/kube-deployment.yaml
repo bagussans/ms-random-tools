@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-random-tools
+  namespace: prod
+  labels:
+    app: ms-random-tools
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ms-random-tools
+  template:
+    metadata:
+      labels:
+        app: ms-random-tools
+    spec:
+      containers:
+      - name: ms-random-tools
+        #image: bagussan/ms-random-tools:latest
+        #if local, and transfer to k3s, docker will append docker.io/library automatically
+        image: docker.io/library/ms-random-tools:local
+        #imagePullPolicy: Always
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+          name: ms-rand-tools
+        envFrom:
+            - secretRef:
+                name: ms-random-tools-secrets     # 🔗 link to the Secret
+            #- configMapRef:
+                #name: ms-random-tools-config      # optional, for non-sensitive vars

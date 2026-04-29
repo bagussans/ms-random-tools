@@ -1,0 +1,20 @@
+# .air.toml
+# Minimal hot-reload config for Go development
+
+# Root directory of your project
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  # Command to build your project (you can customize the output binary name)
+  cmd = "go build -o ./tmp/main ."
+  # The binary that Air should run after building
+  bin = "tmp/main"
+  full_bin = "./tmp/main"
+
+  # Optional file extensions to watch
+  include_ext = ["go", "tpl", "tmpl", "html"]
+  exclude_dir = ["tmp", "vendor"]
+
+[log]
+  time = true
